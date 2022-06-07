@@ -8,22 +8,26 @@
                "envy"
                "cl-ppcre"
                "uiop"
-
-               ;; for @route annotation
                "cl-syntax-annot"
-
-               ;; HTML Template
                "djula"
-
-               ;; for DB
                "datafly"
-               "sxql")
+               "sxql"
+               "mito"
+               "local-time")
   :components ((:module "src"
                 :components
-                ((:file "main" :depends-on ("config" "view" "db"))
+                ((:file "models/categories" :depends-on ("models"))
+                 (:file "models/organizations" :depends-on ("models"))
+                 (:file "models/items" :depends-on ("models"))
+                 (:file "main" :depends-on ("config" "view" "db"))
                  (:file "web" :depends-on ("view"))
                  (:file "view" :depends-on ("config"))
                  (:file "db" :depends-on ("config"))
-                 (:file "config"))))
+                 (:file "utils")
+                 (:file "models" :depends-on ("db" "utils"))
+                 (:file "config")))
+               (:module "db"
+                :components
+                ((:file "schema"))))
   :description ""
   :in-order-to ((test-op (test-op "moshack-test"))))

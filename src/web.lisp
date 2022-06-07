@@ -6,7 +6,11 @@
         :moshack.view
         :moshack.db
         :datafly
-        :sxql)
+        :sxql
+        :moshack.models
+        :moshack.categories
+        :moshack.organizations
+        :moshack.items)
   (:export :*web*))
 (in-package :moshack.web)
 
@@ -53,6 +57,9 @@
   (setf (getf (response-headers *response*) :Access-Control-Allow-Headers) "*")
   (setf (getf (response-headers *response*) :Access-Control-Allow-Methods) "*")  
   (next-route))
+
+(defroute "/api/categories" ()
+  (render-json (get-categories)))
 
 (defroute "/" ()
   (render #P"index.html"))
