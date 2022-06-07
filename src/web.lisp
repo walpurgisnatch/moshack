@@ -7,6 +7,7 @@
         :moshack.db
         :datafly
         :sxql
+        :moshack.utils
         :moshack.models
         :moshack.categories
         :moshack.organizations
@@ -60,6 +61,21 @@
 
 (defroute "/api/categories" ()
   (render-json (get-categories)))
+
+(defroute "/api/category" (&key category)
+  (render-json (find-where items (:= :id category))))
+
+(defroute "/api/organizations" ()
+  (render-json (get-organizations)))
+
+(defroute "/api/organizations/:id" (&key id)
+  (render-json (get-organization id)))
+
+(defroutes "/api/items" (&key |name|)
+  (render-json (get-items |name|)))
+
+(defroutes "/api/items/:id" (&key id)
+  (render-json (get-item id)))
 
 (defroute "/" ()
   (render #P"index.html"))

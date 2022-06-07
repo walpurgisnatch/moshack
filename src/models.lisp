@@ -32,13 +32,15 @@
                          (:has-many (items items)
                                     (select :*
                                             (from :items)
-                                            (where (:= :category id))
+                                            (where (:= :organization id))
                                             (order-by (:desc :created_at)))))
   id
   name
+  description
   address
   inn
   website
+  items-count
   created-at
   updated-at)
 

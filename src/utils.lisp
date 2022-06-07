@@ -34,12 +34,14 @@
             :updated_at (local-time:now))
       (where (,@where)))))
 
-(defmacro find-where (table where &key (order-by `(:desc :created_at)))
+(defmacro find-where (table where &key (order-by `(:desc :created_at)) (offset 0) (limit 100))
   `(let ((data (retrieve-all
                 (select :*
                   (from ,(key table))
                   (where ,where)
-                  (order-by ,order-by))
+                  (order-by ,order-by)
+                  (offset ,offset)
+                  (limit ,limit))
                 :as ',table)))
      data))
 
