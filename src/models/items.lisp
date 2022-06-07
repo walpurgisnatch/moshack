@@ -15,10 +15,12 @@
 
 (in-package :moshack.items)
 
+;(print (items-org (car (get-item 1))))
+
 (defun get-item (id)
   (find-where items (:= :id id)))
 
-(defun get-items (&optional (name "") (limit 100) (offset 0))
+(defun get-items (&key (name "") (limit 100) (offset 0))
   (find-where items (:like :name (wildcard name)) :limit limit :offset offset))
 
 (defun create-item (name category organization &optional (price 0))

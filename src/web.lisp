@@ -72,7 +72,7 @@
   (render-json (get-organization id)))
 
 (defroutes "/api/items" (&key |name|)
-  (render-json (get-items |name|)))
+  (render-json (get-items :name |name|)))
 
 (defroutes "/api/items/:id" (&key id)
   (render-json (get-item id)))

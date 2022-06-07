@@ -18,7 +18,7 @@
     (setf (organizations-items-count organization) (length (organizations-items organization)))
     organization))
 
-(defun get-organizations (&optional (name "") (limit 100) (offset 0))
+(defun get-organizations (&key (name "") (limit 100) (offset 0))
   (find-where organizations (:like :name (wildcard name)) :limit limit :offset offset))
 
 (defun create-organization (name description address inn website)

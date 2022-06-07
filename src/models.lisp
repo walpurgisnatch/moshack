@@ -3,8 +3,8 @@
   (:use :cl :sxql :cl-annot.class :datafly)
   (:export :categories-items
            :organizations-items
-           :items-organization
-           :items-category))
+           :items-org
+           :items-cat))
 
 (in-package :moshack.models)
 
@@ -48,8 +48,8 @@
 @export
 (defmodel (items (:inflate created-at #'datetime-to-timestamp)
                  (:inflate updated-at #'datetime-to-timestamp)
-                 (:has-a (organization organizations) (where (:= :id organization)))
-                 (:has-a (category categories) (where (:= :id category))))
+                 (:has-a (org organizations) (where (:= :id organization)))
+                 (:has-a (cat categories) (where (:= :id category))))
 
   id
   name
