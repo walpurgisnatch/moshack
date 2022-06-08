@@ -62,19 +62,20 @@
 (defroute "/api/categories" ()
   (render-json (get-categories)))
 
-(defroute "/api/category" (&key category)
-  (render-json (find-where items (:= :id category))))
+(defroute "/api/category/:category" (&key category)
+  (render-json (find-where items (:= :category (category-id category)))))
 
 (defroute "/api/organizations" ()
   (render-json (get-organizations)))
 
 (defroute "/api/organizations/:id" (&key id)
-  (render-json (get-organization id)))
+  (let ((organization (get-organization id)))
+    (render-json `(:organization ,(get-organization id) :items ,(organizations-items organization)))))
 
-(defroutes "/api/items" (&key |name|)
-  (render-json (get-items :name |name|)))
+(defroute "/api/items" (&key (|statement| :and) |name| |price| (|limit| 100) (|offset| 0) (|order-by| `(:desc :created_at)))
+  (render-json (get-items :statement |statement| :name |name| :price |price| :limit |limit| :offset |offset| :order-by |order-by|)))
 
-(defroutes "/api/items/:id" (&key id)
+(defroute "/api/items/:id" (&key id)
   (render-json (get-item id)))
 
 (defroute "/" ()

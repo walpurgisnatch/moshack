@@ -20,8 +20,11 @@
 (defun get-item (id)
   (find-where items (:= :id id)))
 
-(defun get-items (&key (name "") (limit 100) (offset 0))
+(defun get-items (&key (statement :and) (name "") price (limit 100) (offset 0) (order-by `(:desc :created_at)))
   (find-where items (:like :name (wildcard name)) :limit limit :offset offset))
+
+(defmacro find-items (&rest args &key (statement :and) (name "") price (limit 100) (offset 0) (order-by `(:desc :created_at)))
+  `(find-where items (,statement ,@(only-vals args)) :limit limit :offset offset :order-by order-by))
 
 (defun create-item (name category organization &optional (price 0))
   (handler-case 

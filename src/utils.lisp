@@ -20,7 +20,21 @@
 
 (defun wildcard (string)
   (concatenate 'string "%" string "%"))
-  
+
+(defun intern-keys (args)
+  (loop for key in args by #'cddr
+        for val in (cdr args) by #'cddr
+        collect (intern (string key) "KEYWORD")
+        collect val))
+
+(defmacro keys-and-vals (keys)
+  `(or ,@(loop for key in keys
+               collect `(eql x ,key)
+               collect `(equal x (getf list ,key)))))
+
+(defun only-vals (list)
+  (remove-if #'(lambda (x) (keys-and-vals (:statement :limit :offset :order-by))) list))
+
 ;;;; CRUD
 
 (defmacro model-update (table where &rest cols)

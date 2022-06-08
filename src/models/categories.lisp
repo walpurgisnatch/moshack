@@ -10,6 +10,7 @@
             :create-category
             :update-category
             :category++
+            :category-id
             :delete-category))
 
 (in-package :moshack.categories)
@@ -20,6 +21,9 @@
 
 (defun get-categories (&key (name "") (limit 100) (offset 0))
   (find-where categories (:like :name (wildcard name)) :limit limit :offset offset))
+
+(defun category-id (name)
+  (cadr (select-where categories (:= :name name) :id)))
 
 (defun create-category (name)
   (handler-case 
