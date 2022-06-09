@@ -13,7 +13,8 @@
                "datafly"
                "sxql"
                "mito"
-               "local-time")
+               "local-time"
+               "stepster")
   :components ((:module "src"
                 :components
                 ((:file "models/categories" :depends-on ("models"))
