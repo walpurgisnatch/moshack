@@ -10,20 +10,24 @@
 
 (setf producers (ss:extract-urls x #'(lambda (q y) (substp y q)) "/producers/"))
 
-(setf name (ss:text page 'h1)
-(setf description (ss:text page 'div :test (ss:check-attr 'class) :test-args "iv_text"))))
-(setf category (plump:text (nth 4 (ss:collect-from page 'li :test (ss:check-attr 'itemtype) :test-args "http://schema.org/ListItem"))))
-(setf address (ss:text page 'td :test (ss:check-attr 'itemprop) :test-args "address"))
-(setf website (ss:text page 'a :test (ss:check-attr 'itemprop) :test-args "url"))
-(setf phone (ss:text page 'span :test (ss:check-attr 'itemprop) :test-args "telephone"))
+(defun from-table (page attr)
+  (let ((tds (loop for td in (ss:collect-from page 'tr)
+                   collect (ss:collect-from td 'td))))
+    (loop for (key . val) in tds
+          if (equal (plump:text key) attr)
+            return (plump:text (car val)))))
 
-(setf td (loop for q in (ss:collect-from page 'tr)
-               collect (ss:collect-from q 'td)))
-(loop for (f . s) in td
-      if (equal (plump:text f) "ИНН")
-        return (plump:text (car s)))
-(loop for (f . s) in td
-      if (equal (plump:text f) "Юридический адрес")
-        return (plump:text (car s)))
+(defun text (page selector attr val)
+  (plump:text (ss:node-with-attr page selector attr val)))
+
+(defun parse-organization (page)
+  (let* ((name (ss:text page 'h1))
+         (description (text page 'div 'class "iv_text"))
+         (category (plump:text (nth 4 (ss:collect-from page 'li :test (ss:check-attr 'itemtype) :test-args "http://schema.org/ListItem"))))
+         (address (text page 'td 'itemprop "address"))
+         (website (text page 'a 'itemprop "url"))
+         (phone (text page 'span 'itemprop "telephone"))
+         (inn (from-table page "ИНН")))
+    (list name description category address website phone inn)))
 
 (setf price (ss:text item 'div :test (ss:check-attr 'class) :test-args "price"))))
