@@ -2,18 +2,19 @@
   "name": "moshack",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint --ext .ts,.tsx . ",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "npm run lint -- --fix --cache",
     "format": "prettier . --write"
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.1.0",
+    "@vercel/functions": "^3.1.0",
     "antd": "^5.27.4",
+    "mongodb": "^6.20.0",
     "next": "15.5.3",
     "react": "19.1.0",
     "react-dom": "19.1.0"
