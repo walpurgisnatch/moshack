@@ -6,18 +6,22 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint --ext .ts,.tsx . ",
+    "lint": "eslint --ext .ts,.tsx ./src ",
     "lint:fix": "npm run lint -- --fix --cache",
-    "format": "prettier . --write"
+    "format": "prettier ./src --write"
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.1.0",
+    "@auth/mongodb-adapter": "^3.10.0",
     "@vercel/functions": "^3.1.0",
     "antd": "^5.27.4",
+    "bcryptjs": "^3.0.2",
     "mongodb": "^6.20.0",
     "next": "15.5.3",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "next-auth": "^5.0.0-beta.29",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
