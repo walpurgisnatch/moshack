@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import RegistrationForm from '@/components/forms/registration/RegistrationForm';
+import RegistrationForm from './RegistrationForm';
 
 export const metadata: Metadata = {
   title: 'Register',

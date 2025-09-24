@@ -1,36 +1,29 @@
 'use client';
 
-import { useState } from 'react';
 import { Button, Form, Input, Space, message } from 'antd';
-import { registerUser } from '@/actions/regitster';
 import { IFormData } from '@/shared/types';
+import { signInWithCredentials } from '@/actions/sign-in';
 
-import './RegistrationForm.css';
+import '../index.scss';
 
-const RegistrationForm = () => {
-  const [loading, setLoading] = useState(false);
+const SignInForm = () => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
-  const onFinish = async (formData: IFormData) => {
-    setLoading(true);
+  const onFinish = async (
+    formData: Pick<IFormData, 'email' | 'password'>
+  ) => {
     try {
-      await registerUser(formData);
-      messageApi.success('Вы успешно зарегистрировались');
-      // form.resetFields();
-      // setTimeout(() => {
-      //   redirect('/login');
-      // }, 2000);
+      await signInWithCredentials(
+        formData.email,
+        formData.password
+      );
     } catch (error) {
       if (error instanceof Error) {
         messageApi.error(error.message);
       } else {
-        messageApi.error(
-          'Произошла ошибка при регистрации'
-        );
+        messageApi.error('Произошла ошибка авторизации');
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -40,7 +33,7 @@ const RegistrationForm = () => {
       <Form
         form={form}
         layout='vertical'
-        name='user-register'
+        name='user-signin'
         onFinish={onFinish}
       >
         <Space
@@ -48,24 +41,6 @@ const RegistrationForm = () => {
           direction='vertical'
           className='w-full'
         >
-          <Form.Item
-            label='Имя пользователя'
-            name='username'
-            className='mb-8'
-            rules={[
-              {
-                required: true,
-                message: 'Введите имя пользователя'
-              },
-              {
-                min: 2,
-                message:
-                  'Имя пользователя должен быть не менее 2 символов'
-              }
-            ]}
-          >
-            <Input placeholder='Введите имя пользователя' />
-          </Form.Item>
           <Form.Item
             label='Почта'
             name='email'
@@ -94,17 +69,13 @@ const RegistrationForm = () => {
           >
             <Input.Password placeholder='Введите пароль' />
           </Form.Item>
-          <Button
-            type='primary'
-            htmlType='submit'
-            loading={loading}
-          >
-            Зарегистрироваться
-          </Button>{' '}
+          <Button type='primary' htmlType='submit'>
+            Войти
+          </Button>
         </Space>
       </Form>
     </>
   );
 };
 
-export default RegistrationForm;
+export default SignInForm;
