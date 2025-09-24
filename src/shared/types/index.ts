@@ -4,6 +4,12 @@ export enum Role {
   Player = 'player',
 }
 
+export enum Rarity {
+  Common = 'common',
+  Rare = 'rare',
+}
+
+
 export interface IFormData {
   username: string;
   email: string;

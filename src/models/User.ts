@@ -1,12 +1,22 @@
 import mongoose, { Document, Schema, UpdateQuery } from 'mongoose';
 import { compare, genSalt, hash } from 'bcryptjs';
+
 import { Role } from '@/shared/types';
+
+export interface UserSkill extends Document {
+  skill: mongoose.Types.ObjectId;
+  experience: number;
+}
 
 export interface User {
   username: string;
   email: string;
   password: string;
   role: Role.Admin | Role.Operator | Role.Player;
+  level: number;
+  experience: number;
+  coins: number;
+  skills: UserSkill[];
 }
 
 export interface IUser extends Document {
@@ -15,6 +25,9 @@ export interface IUser extends Document {
   email: string;
   password: string;
   role: Role;
+  level: number;
+  experience: number;
+  skills: UserSkill[];
   comparePassword: (candidatePassword: string) => Promise<boolean>;
 }
 
