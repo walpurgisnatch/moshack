@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
-import { getCollection } from '@/db/mongodb';
+
+import User from '@/models/User';
+
 export async function GET() {
   try {
-    const usersCollection = await getCollection('users');
-    const users = await usersCollection.find().toArray();
+    const users = await User.find();
 
     return NextResponse.json({
       data: users

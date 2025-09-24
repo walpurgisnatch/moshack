@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button, Form, Input, Space, message } from 'antd';
 import { registerUser } from '@/actions/regitster';
-import { IFormData } from '@/types/form-data';
+import { IFormData } from '@/shared/types/form-data';
 
 import './RegistrationForm.css';
 

@@ -1,15 +1,13 @@
 'use server';
 
-import { getCollection } from '@/db/mongodb';
-import { IFormData } from '@/types/form-data';
-import { saltAndHashPassword } from '@/utils/password';
+import User from '@/models/User';
+import { IFormData } from '@/shared/types';
+import { saltAndHashPassword } from '@/shared/utils/password';
 
 export async function registerUser(formData: IFormData) {
   const { username, email, password } = formData;
 
-  const usersCollection = await getCollection('users');
-
-  const existingUser = await usersCollection.findOne({
+  const existingUser = await User.findOne({
     email
   });
   if (existingUser) {
@@ -20,7 +18,7 @@ export async function registerUser(formData: IFormData) {
   const saltedPassword =
     await saltAndHashPassword(password);
 
-  const result = await usersCollection.insertOne({
+  const result = await User.insertOne({
     username,
     email,
     password: saltedPassword
@@ -30,6 +28,6 @@ export async function registerUser(formData: IFormData) {
     username,
     email,
     password: saltedPassword,
-    _id: result.insertedId.toString()
+    _id: result._id.toString()
   };
 }

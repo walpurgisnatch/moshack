@@ -1,15 +1,16 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { MongoDBAdapter } from '@auth/mongodb-adapter';
-import clientPromise from '@/db/mongodb';
-import bcrypt from 'bcryptjs';
-import { getUserFromDb } from '@/utils/user';
-import { signInSchema } from '@/schema/zod';
 import { ZodError } from 'zod';
+import bcrypt from 'bcryptjs';
+
+import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import client from '@/shared/db/auth';
+import { signInSchema } from '@/schema/zod';
+import User from '@/models/User';
 
 export const { handlers, signIn, signOut, auth } = NextAuth(
   {
-    adapter: MongoDBAdapter(clientPromise),
+    adapter: MongoDBAdapter(client),
     providers: [
       Credentials({
         credentials: {
@@ -28,7 +29,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth(
             const { email, password } =
               await signInSchema.parseAsync(credentials);
 
-            const user = await getUserFromDb(email);
+            const user = await User.findOne({ email });
             if (!user) return null;
 
             const isValid = await bcrypt.compare(
