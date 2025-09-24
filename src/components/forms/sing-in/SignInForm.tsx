@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, Form, Input, Space, message } from 'antd';
-import { IFormData } from '@/shared/types/form-data';
+import { IFormData } from '@/shared/types';
 import { signInWithCredentials } from '@/actions/sign-in';
 
 import './SignInForm.css';
