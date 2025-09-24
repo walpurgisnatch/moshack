@@ -20,7 +20,6 @@ export interface User {
 }
 
 export interface IUser extends Document {
-  _id: Schema.Types.ObjectId;
   username: string;
   email: string;
   password: string;

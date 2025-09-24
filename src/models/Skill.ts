@@ -6,7 +6,6 @@ export interface Skill {
 }
 
 export interface ISkill extends Document {
-  _id: Schema.Types.ObjectId;
   name: string;
   description: string;
 }

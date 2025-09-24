@@ -24,7 +24,6 @@ export interface Task {
 }
 
 export interface ITask extends Document {
-  _id: Schema.Types.ObjectId;
   name: string;
   description: string;
   requiredLevel: number;

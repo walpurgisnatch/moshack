@@ -5,7 +5,7 @@ interface IProps {
   description: string;
 }
 
-const taskCard = ({ name, description }: IProps) => {
+const TaskCard = ({ name, description }: IProps) => {
   return (
     <Card title={name} variant='borderless'>
       {description}
@@ -13,4 +13,4 @@ const taskCard = ({ name, description }: IProps) => {
   );
 };
 
-export default taskCard;
+export default TaskCard;

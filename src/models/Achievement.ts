@@ -10,7 +10,6 @@ export interface Achievement {
 }
 
 export interface IAchievement extends Document {
-  _id: Schema.Types.ObjectId;
   icon: string;
   name: string;
   description: string;
