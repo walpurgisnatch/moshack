@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import CreateTaskForm from './form';
+import CreateTaskForm from '../components/form';
 
 export const metadata: Metadata = {
   title: 'Create task'

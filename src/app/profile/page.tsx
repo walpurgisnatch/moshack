@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 
-import TaskCard from '@/components/taskCard';
-
 import styles from './styles.module.scss';
 
 export const metadata: Metadata = {
@@ -10,7 +8,7 @@ export const metadata: Metadata = {
 
 const TasksPage = async () => {
   const res = await fetch(
-    'http://localhost:3000/api/tasks',
+    'http://localhost:3000/api/profile',
     {
       cache: 'no-store'
     }

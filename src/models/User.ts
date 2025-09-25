@@ -3,9 +3,14 @@ import { compare, genSalt, hash } from 'bcryptjs';
 
 import { Role } from '@/shared/types';
 
-export interface UserSkill extends Document {
+export interface IUserSkill extends Document {
   skill: mongoose.Types.ObjectId;
   experience: number;
+}
+
+export interface IUserTask extends Document {
+  task: mongoose.Types.ObjectId;
+  progress: number;
 }
 
 export interface User {
@@ -16,7 +21,7 @@ export interface User {
   level: number;
   experience: number;
   coins: number;
-  skills: UserSkill[];
+  skills: IUserSkill[];
 }
 
 export interface IUser extends Document {
@@ -26,15 +31,30 @@ export interface IUser extends Document {
   role: Role;
   level: number;
   experience: number;
-  skills: UserSkill[];
+  tasks: IUserTask[];
+  skills: IUserSkill[];
   comparePassword: (candidatePassword: string) => Promise<boolean>;
 }
+
+const UserTaskSchema = new mongoose.Schema<IUserTask>({
+  task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task', required: true },
+  progress: { type: Number, required: true, default: 0 },
+})
+
+const UserSkillSchema = new mongoose.Schema<IUserSkill>({
+  skill: { type: mongoose.Schema.Types.ObjectId, ref: 'Skill', required: true },
+  experience: { type: Number, required: true, default: 0 },
+})
 
 const UserSchema = new mongoose.Schema<IUser>({
   username: { type: String, required: true, unique: true, dropDups: true },
   email: { type: String, required: true, unique: true },
   password: { type: String },
   role: { type: String, enum: Object.values(Role), default: Role.Player },
+  level: { type: Number, required: true, default: 1 },
+  experience: { type: Number, required: true, default: 0 },
+  tasks: [UserTaskSchema],
+  skills: [UserSkillSchema]
 });
 
 // Перед сохранением хэшировать пароль
