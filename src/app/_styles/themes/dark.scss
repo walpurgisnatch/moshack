@@ -1,0 +1,10 @@
+@mixin dark-theme {
+    --color-bg: #{$night-blue};
+    --color-text: #{$white};
+
+    --color-link: #{$blue-medium};
+
+    --color-btn-bg: #{$blue-dark};
+    --color-btn-text: #{$white};
+
+}

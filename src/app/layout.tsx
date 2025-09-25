@@ -1,9 +1,11 @@
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
 import { auth } from '@/auth/auth';
 import { SessionProvider } from 'next-auth/react';
+import ThemeProvider from '@/providers/theme-provider';
+
+import './globals.scss';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,13 +34,15 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProvider
-          session={session}
-          refetchInterval={0}
-          refetchOnWindowFocus={false}
-        >
-          <AntdRegistry>{children}</AntdRegistry>
-        </SessionProvider>
+        <ThemeProvider>
+          <SessionProvider
+            session={session}
+            refetchInterval={0}
+            refetchOnWindowFocus={false}
+          >
+            <AntdRegistry>{children}</AntdRegistry>
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
