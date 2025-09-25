@@ -3,10 +3,13 @@
 import { Button, Form, Input, Space, message } from 'antd';
 import { IFormData } from '@/shared/types';
 import { signInWithCredentials } from '@/actions/sign-in';
+import { useSession } from 'next-auth/react';
 
-import '../index.scss';
+import styles from '../Auth.module.scss';
 
 const SignInForm = () => {
+  const { update } = useSession();
+
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -18,9 +21,11 @@ const SignInForm = () => {
         formData.email,
         formData.password
       );
+
+      await update();
     } catch (error) {
       if (error instanceof Error) {
-        messageApi.error(error.message);
+        messageApi.error('Введённые данные не верны');
       } else {
         messageApi.error('Произошла ошибка авторизации');
       }
@@ -69,7 +74,12 @@ const SignInForm = () => {
           >
             <Input.Password placeholder='Введите пароль' />
           </Form.Item>
-          <Button type='primary' htmlType='submit'>
+          <Button
+            block
+            type='primary'
+            htmlType='submit'
+            className={styles.button}
+          >
             Войти
           </Button>
         </Space>

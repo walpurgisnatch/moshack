@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import { registerUser } from '@/actions/register';
 import { IFormData } from '@/shared/types';
 
-import '../index.scss';
+import styles from '../Auth.module.scss';
 
 const RegistrationForm = () => {
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ const RegistrationForm = () => {
       messageApi.success('Вы успешно зарегистрировались');
       setTimeout(() => {
         redirect('/sign-in');
-      }, 100);
+      }, 500);
       form.resetFields();
     } catch (error) {
       if (error instanceof Error) {
@@ -96,9 +96,11 @@ const RegistrationForm = () => {
             <Input.Password placeholder='Введите пароль' />
           </Form.Item>
           <Button
+            block
             type='primary'
             htmlType='submit'
             loading={loading}
+            className={styles.button}
           >
             Зарегистрироваться
           </Button>{' '}
