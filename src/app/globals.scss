@@ -1,12 +1,35 @@
 @import 'tailwindcss';
 @import './_styles//colors.scss';
 @import './_styles/themes/theme.scss';
+@import './_styles//background-body/background-body.scss';
 
 
 
 body {
+  position: relative;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background-image: var(--background-image);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;         
+  background-color: black;
+  opacity: 0.5;      
+  pointer-events: none; 
+  z-index: 0;       
+}
+
+body > * {
+  position: relative; 
+  z-index: 1;
 }
 

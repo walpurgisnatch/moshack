@@ -1,0 +1,33 @@
+:root[data-theme='light'] {
+  --background-image: url('https://stihi.ru/pics/2021/09/17/3448.jpg');
+  
+}
+
+:root[data-theme='dark'] {
+  --background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme='system'],
+  :root:not([data-theme='dark']):not([data-theme='light']) {
+      --background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root[data-theme='system'],
+  :root:not([data-theme='dark']):not([data-theme='light']) {
+     --background-image: url('https://stihi.ru/pics/2021/09/17/3448.jpg');
+     
+  }
+
+  body::before {
+    opacity: .1;
+  }
+   
+}
+
+:root[data-theme='light'] body::before {
+  opacity: 0;
+}
