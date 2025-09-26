@@ -1,0 +1,31 @@
+.wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    align-items: center;
+}
+
+.title {
+    font-size: clamp(40px,10vw,60px);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--color-text);
+}
+
+.subtitle {
+    font-size: clamp(16px, 5vw,18px);
+    margin-top: 16px;
+    color: var(--color-text);
+}
+
+.link {
+    margin-top: 32px;
+    padding: 12px 24px;
+    width: 250px;
+    border-radius: 10px;
+    background-color: var(--color-btn-bg);
+    white-space: nowrap;
+}

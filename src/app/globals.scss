@@ -9,7 +9,7 @@ body {
   position: relative;
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geologica), sans-serif;
   min-height: 100vh;
   background-image: var(--background-image);
   background-size: cover;

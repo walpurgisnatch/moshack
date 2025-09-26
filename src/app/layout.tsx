@@ -1,20 +1,16 @@
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import { auth } from '@/auth/auth';
+import { Geologica } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
 import ThemeProvider from '@/providers/theme-provider';
 
 import './globals.scss';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin']
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin']
+const workSans = Geologica({
+  variable: '--font-geologica',
+  weight: ['400', '500', '700', '800', '900'],
+  style: 'normal',
+  display: 'swap'
 });
 
 export const metadata: Metadata = {
@@ -27,16 +23,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-
   return (
     <html lang='en'>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${workSans.variable} antialiased`}>
         <ThemeProvider>
           <SessionProvider
-            session={session}
             refetchInterval={0}
             refetchOnWindowFocus={false}
           >
