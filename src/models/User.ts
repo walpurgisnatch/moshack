@@ -1,8 +1,4 @@
-import mongoose, {
-  Document,
-  Schema,
-  UpdateQuery
-} from 'mongoose';
+import mongoose, { Document, Schema, UpdateQuery } from 'mongoose';
 import { compare, genSalt, hash } from 'bcryptjs';
 
 import { Role } from '@/shared/types';
@@ -16,14 +12,6 @@ export interface IUserTask extends Document {
   task: mongoose.Types.ObjectId;
   progress: number;
 }
-
-const UserSkillSchema = new Schema({
-  skill: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Skill'
-  },
-  experience: { type: Number, default: 0 }
-});
 
 export interface User {
   username: string;
@@ -46,11 +34,6 @@ export interface IUser extends Document {
   tasks: IUserTask[];
   skills: IUserSkill[];
   comparePassword: (candidatePassword: string) => Promise<boolean>;
-  skills: UserSkill[];
-  coins: number;
-  comparePassword: (
-    candidatePassword: string
-  ) => Promise<boolean>;
 }
 
 const UserTaskSchema = new mongoose.Schema<IUserTask>({
@@ -73,41 +56,6 @@ const UserSchema = new mongoose.Schema<IUser>({
   tasks: [UserTaskSchema],
   skills: [UserSkillSchema]
 });
-const UserSchema = new mongoose.Schema<IUser>(
-  {
-    username: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: {
-      type: String,
-      enum: Object.values(Role),
-      default: Role.Player
-    },
-    level: {
-      type: Number,
-      default: 1
-    },
-    experience: {
-      type: Number,
-      default: 0
-    },
-    coins: {
-      type: Number,
-      default: 0
-    },
-    skills: {
-      type: [UserSkillSchema],
-      default: []
-    }
-  },
-  {
-    versionKey: false
-  }
-);
 
 // Перед сохранением хэшировать пароль
 // UserSchema.pre('save', async function (next) {
@@ -125,9 +73,7 @@ const UserSchema = new mongoose.Schema<IUser>(
 // });
 
 // Добавляем метод к схеме
-UserSchema.methods.comparePassword = async function (
-  candidatePassword: string
-): Promise<boolean> {
+UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
   try {
     // Сравниваем введенный пароль с хэшированным паролем в базе данных
     return await compare(candidatePassword, this.password);
@@ -148,5 +94,4 @@ UserSchema.methods.comparePassword = async function (
 //   next();
 // });
 
-export default mongoose.models.User ||
-  mongoose.model<IUser>('User', UserSchema);
+export default mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
